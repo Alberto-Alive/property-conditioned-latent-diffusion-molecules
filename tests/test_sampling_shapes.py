@@ -15,4 +15,12 @@ def test_ddim_shapes():
     def fn(x, t, c):
         return model(x, t, c)
     
-    z = sampler
+    z = sampler.sample(
+        fn,
+        shape=torch.Size([4, 32]),
+        cond=torch.zeros(4, 5),
+        steps=10,
+        device=torch.device("cpu"),
+        cfg_scale=2.0        
+    )
+    assert z.shape == (4, 32)
