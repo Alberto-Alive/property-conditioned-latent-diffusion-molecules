@@ -58,3 +58,32 @@ def compute_properties(smiles: str, prop_names: List[str] = DEFAULT_PROP_NAMES) 
         else:
             raise ValueError(f"Unknown property: {p}")
     return props
+
+
+@dataclass
+class PropNormalizer:
+    prop_names: List[str]
+    mean: List[float]
+    std: List[float]
+
+    def normalize(self, x: Dict[str, float]):
+        import numpy as np
+        v = np.array([x[p] for p in self.prop_names], dtype="float32")
+        m = np.array(self.mean, dtype="float32")
+        s = np.array(self.std, dtype="float32")
+        s = np.maximum(s, 1e-6)
+        return (v - m) / s
+
+    def denormalize_vec(self, v):
+        import numpy as np
+        v = np.array(v, dtype="float32")
+        m = np.array(self.mean, dtype="float32")
+        s = np.array(self.std, dtype="float32")
+        return v * s + m
+
+    def to_json(self) -> Dict:
+        return {"prop_names": self.prop_names, "mean": self.mean, "std": self.std}
+
+    @classmethod
+    def from_json(cls, obj: Dict) -> "PropNormalizer":
+        return cls(prop_names=list(obj["prop_names"]), mean=list(obj["mean"]), std=list(obj["std"]))
