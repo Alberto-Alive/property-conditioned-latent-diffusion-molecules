@@ -10,4 +10,6 @@ Implemented:
 
 - classifier-free guidance (CFG) at sampling time.
 
-- R
+- RDKit-based evaluation: validity / uniqueness / novelty / constraint satisfaction.
+
+> Core inspirations: DDPM (Ho et al., 2020), DDIM (Song et al., 2020), Latent Diffusion (Rombach et al., 2022), Classifier-Free Guidance (Ho & Salimans, 2022), cosine schedule (Nichol & Dhariwal, 2021), SELFIES (Krenn et al.).
