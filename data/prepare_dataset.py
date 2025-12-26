@@ -33,4 +33,21 @@ def build_vocab(token_lists: List [List[str]], min_freq: int = 1) -> Dict:
 
 def encode_tokens(tokens: List[str], stoi: Dict[str, int]) -> List[int]:
     unk = stoi["<unk>"]
-    return [stoi.get(t, nk)]
+    return [stoi.get(t, unk) for t in tokens]
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--smiles_path", type=str, required=True)
+    ap.add_argument("--out_dir", type=str, required=True)
+    ap.add_argument("--seed", type=int, default=123)
+    ap.add_argument("--max_len", type=int, default=120)
+    ap.add_argument("--min_len", type=int, default=5)
+    ap.add_argument("--max_mols", type=int, default=300000)
+    ap.add_argument("--prop_names", type=str, default=",".join(DEFAULT_PROP_NAMES))
+    
+    args = ap.parse_args()
+    random.seed(args.seed)
+    os.makedirs(args.out_dir, exist_ok=True)
+    
+    prop_names = [p.strip() for p in args.prop_names.split(",") if p.strip()]
+    
