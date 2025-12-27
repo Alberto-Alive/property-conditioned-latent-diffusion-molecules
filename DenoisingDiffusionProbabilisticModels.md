@@ -21,3 +21,7 @@ Apparently the key to agi is continual learning yet today's ai is built like a c
 * **(\alpha_t := 1-\beta_t)**: how much “signal” you keep at step (t).
 * **(\bar\alpha_t := \prod_{s=1}^t \alpha_s)**: how much original signal remains after *t* steps total.
 * **(\mu_\theta(x_t,t))** and **(\Sigma_\theta(x_t,t))**: the model’s predicted mean and variance for the reverse step.
+
+
+Good to read:SIMPLIFYING, STABILIZING & SCALING CONTINUOUSTIME CONSISTENCY MODELS because it proposes an improvement in trainig so the
+    model can learn to denoise in fewer steps by learning to predict the output from different noise levels directly instead of learning to denoise step by step.
